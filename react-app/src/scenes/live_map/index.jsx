@@ -1,8 +1,7 @@
 import { Box } from "@mui/material";
-import {React, useEffect } from 'react';
-import Header from "../../components/Header";
+import {React } from 'react';
 import {Map} from 'react-map-gl';
-import {DeckGL, IconLayer} from 'deck.gl'; 
+import {DeckGL, IconLayer } from 'deck.gl'; 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import adsb_data from "../../assets/airplanes.json";
 import airplane_icon from "../../assets/airplane.png";
@@ -19,7 +18,7 @@ const INITIAL_VIEW_STATE = {
   latitude: 20,
   longitude: 0,
   zoom: 2,
-  minZoom: 1,
+  minZoom: 2,
   bearing: 0,
   pitch: 30
 };
@@ -45,37 +44,24 @@ function getAirplaneState() {
     })
   }
 
-const LiveADSB = () => {
-    const onClick = info => {
-        if (info.object) {
-          console.log(`${info.object.callsign}:`);
-          console.log(`\tLast Timestamp: ${info.object.last_timestamp}`);
-          console.log(`\tLast Position Timestamp: ${info.object.last_position_timestamp}`);
-          console.log(`\tAltitude: ${info.object.altitude}`);
-          console.log(`\tVelocity: ${info.object.velocity}`);
-        }
-      };
-    
-      // useEffect(() => {
-      //   let interval = setInterval(() => {
-      //     fetch("https://opensky-network.org/api/states/all").then((response) => {
-      //       response.json().then((data) => {
-      //           console.log(data);
-      //       });
-      //   });
-      //   }, 1000 * UPDATE_TIME);
-      //   return () => {
-      //     clearInterval(interval);
-      //   };
-      // }, []);
-    
+
+const LiveADSB = () => { 
+      function getTooltip({object}) {
+        return (
+          object &&
+          `\
+          Call Sign: ${object.callsign || ''}
+          Country: ${object.origin_country || ''}
+          Velocity: ${object.velocity || 0} m/s
+          Direction: ${object.true_track || 0}`
+        );
+      }       
       const layers = [
         new IconLayer({
           id: "airplanes",
           data: AIRPLANES,
           iconAtlas: airplane_icon,
           sizeScale: 25,
-          sizeMinPixels: 10,
           iconMapping: {
               airplane: {
                   x: 0,
@@ -85,19 +71,19 @@ const LiveADSB = () => {
               }
           },
           pickable: true,
-          onClick,
           getPosition: state => [state.longitude, state.latitude],
           getIcon: d => "airplane",
           getAngle: state => 45 + (state.true_track * 180) / Math.PI
         })
       ];
   return (
-    <Box m="20px">
-      <Box height="90vh" width='80vw' position='relative' margin="auto">
+    <Box>
+      <div style={{position:"relative", height:"100vh"}}>
         <DeckGL
             initialViewState={INITIAL_VIEW_STATE}
             controller={true}
             layers={layers}
+            getTooltip={getTooltip}
         >
         <Map
             mapStyle={MAPBOX_STYLE}
@@ -105,22 +91,12 @@ const LiveADSB = () => {
             NavigationControl style={NAV_CONTROL_STYLE} 
         />      
         </DeckGL>
-      </Box>
+      </div>
     </Box>
   );
 };
 
-const LiveAIS = () => {
-    const onClick = info => {
-        if (info.object) {
-          console.log(`${info.object.callsign}:`);
-          console.log(`\tLast Timestamp: ${info.object.last_timestamp}`);
-          console.log(`\tLast Position Timestamp: ${info.object.last_position_timestamp}`);
-          console.log(`\tAltitude: ${info.object.altitude}`);
-          console.log(`\tVelocity: ${info.object.velocity}`);
-        }
-      };
-    
+const LiveAIS = () => {    
       // useEffect(() => {
       //   let interval = setInterval(() => {
       //     fetch("https://opensky-network.org/api/states/all").then((response) => {
@@ -150,15 +126,14 @@ const LiveAIS = () => {
               }
           },
           pickable: true,
-          onClick,
           getPosition: state => [state.longitude, state.latitude],
           getIcon: d => "airplane",
           getAngle: state => 45 + (state.true_track * 180) / Math.PI
         })
       ];
   return (
-    <Box m="20px">
-      <Box height="90vh" width='80vw' position='relative' margin="auto">
+    <Box>
+      <div style={{position:"relative", height:"100vh"}}>
         <DeckGL
             initialViewState={INITIAL_VIEW_STATE}
             controller={true}
@@ -170,7 +145,7 @@ const LiveAIS = () => {
             NavigationControl style={NAV_CONTROL_STYLE} 
         />      
         </DeckGL>
-      </Box>
+      </div>
     </Box>
   );
 };

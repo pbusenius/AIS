@@ -4,6 +4,7 @@ import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import { LiveADSB, LiveAIS } from "./scenes/live_map";
+import { DDPI, DDAPI } from "./scenes/polygon_map";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 
@@ -23,6 +24,8 @@ function App() {
               <Route path="/" element={<Dashboard/>}/>
               <Route path="/live/adsb" element={<LiveADSB/>}/>
               <Route path="/live/ais" element={<LiveAIS/>}/>
+              <Route path="/ddpi" element={<DDPI/>}/>
+              <Route path="/ddapi" element={<DDAPI/>}/>
             </Routes>
           </main>
         </div>

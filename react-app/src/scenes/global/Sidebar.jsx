@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DirectionsBoatIcon from '@mui/icons-material/DirectionsBoat';
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
@@ -74,7 +73,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  Text
+                  Text + Logo
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -99,7 +98,7 @@ const Sidebar = () => {
             />
             <Item
               title="DDPI"
-              to="/"
+              to="/ddpi"
               icon={<DirectionsBoatIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -141,7 +140,7 @@ const Sidebar = () => {
             />
             <Item
               title="DDAPI"
-              to="/"
+              to="/ddapi"
               icon={<AirplanemodeActiveIcon />}
               selected={selected}
               setSelected={setSelected}
