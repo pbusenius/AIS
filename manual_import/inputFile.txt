@@ -1,0 +1,4 @@
+test/data/ais-2020-01-01-00.csv
+test/data/ais-2020-01-01-01.csv
+test/data/ais-2020-01-01-02.csv
+test/data/ais-2020-01-01-03.csv
